@@ -1,0 +1,21 @@
+int* dailyTemperatures(int* T, int TSize, int* returnSize) {
+    int* res = (int*)malloc(TSize * sizeof(int));
+    int* stack = (int*)malloc(TSize * sizeof(int));
+    int top = -1;
+    
+    *returnSize = TSize;
+    for (int i = TSize - 1; i >= 0; i--) {
+        while (top >= 0 && T[i] >= T[stack[top]]) {
+            top--;
+        }
+        if (top >= 0) {
+            res[i] = stack[top] - i;
+        } else {
+            res[i] = 0;
+        }
+        stack[++top] = i;
+    }
+    
+    free(stack);
+    return res;
+}
